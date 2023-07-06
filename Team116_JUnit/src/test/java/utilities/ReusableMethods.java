@@ -1,9 +1,12 @@
 package utilities;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 public class ReusableMethods {
@@ -29,4 +32,40 @@ public class ReusableMethods {
 
 
     }
+    public static void takeSSOnAllPage(WebDriver driver){
+
+        TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+        //dosya yolunu dinamik hale getirmek icin time stamp kullanalim
+        LocalDateTime ldt = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYMMddhhmm");
+
+        String dynamicFilePath = "target/Screenshot/AllPage"+ldt.format(dtf)+".png";
+        File  ssForAllPage = new File(dynamicFilePath);
+        File temproaryPage = takesScreenshot.getScreenshotAs(OutputType.FILE);
+
+        try {
+            FileUtils.copyFile(temproaryPage,ssForAllPage);
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public static void takeSSOfWebElement(WebDriver driver,WebElement wantedElement) {
+
+        TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+        //dosya yolunu dinamik hale getirmek icin time stamp kullanalim
+        LocalDateTime ldt = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYMMddhhmm");
+
+        String dynamicFilePath = "target/Screenshot/WebElement" +ldt.format(dtf) + ".png";
+        File ssForWebElement = new File(dynamicFilePath);
+        File temproaryPage = takesScreenshot.getScreenshotAs(OutputType.FILE);
+
+        try {
+            FileUtils.copyFile(temproaryPage, ssForWebElement);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
