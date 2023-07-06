@@ -61,7 +61,14 @@ public class C04_WebTables extends TestBase{
             counter++;
         }
 
-        //10. ReusableMethods sayfasinda bir method olusturun, Test sayfasindan satir ve sutun sayisini girdigimde bana datayi yazdirsin
-        
+        //10.bir method olusturun, satir ve sutun sayisini girdigimde bana datayi yazdirsin
+        getCellInfo(3,2);
+
+    }
+    public void getCellInfo(int columnNo, int rowNo){
+        //(//div[@role='row'])[2]/div[@role='gridcell'][4]
+        String dynamicXpath = "(//div[@role='row'])["+rowNo+"]/div[@role='gridcell']["+columnNo+"]";
+        WebElement wantedElement = driver.findElement(By.xpath(dynamicXpath));
+        System.out.println("Wanted cell Info = " + wantedElement.getText());
     }
 }
